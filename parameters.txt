@@ -1,0 +1,21 @@
+python	E:\Users\scfan\software\anaconda3_new\python.exe
+work_dir	E:\Users\scfan\program\simulation_project\release_version_2021_02_02
+cell_base_info	E:\Users\scfan\program\simulation_project\release_version_2021_02_02\data\cell_base_info
+raw_data	E:\Users\scfan\program\simulation_project\release_version_2021_02_02\data\raw_data
+sim_data	E:\Users\scfan\program\simulation_project\release_version_2021_02_02\data\sim_data
+features	E:\Users\scfan\program\simulation_project\release_version_2021_02_02\data\features
+
+#fragment_interaction_number_designating_mode	all_cell/each_cell
+fragment_interaction_number_designating_mode	all_cell
+all_cell_seqDepthTime	1
+#each_cell_fragment_interaction_number_designating_mode	sequence_depth_time or fragment_interaction_number
+each_cell_fragment_interaction_number_designating_mode	sequence_depth_time
+#repllicates_number_designating_mode	all_cell/each_cell
+repllicates_number_designating_mode	all_cell
+all_cell_replicates_number	1
+
+combineNumber	5
+#step	0.04
+#Bin_interval_number	200
+parallel	False
+#kernel_number	24

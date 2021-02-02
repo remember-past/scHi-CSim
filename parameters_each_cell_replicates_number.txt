@@ -1,0 +1,16 @@
+python	E:\Users\scfan\software\anaconda3_new\python.exe
+work_dir	E:\Users\scfan\program\simulation_project\release_version
+src	E:\Users\scfan\program\simulation_project\release_version\src
+cell_base_info	E:\Users\scfan\data\CellCycle\release_version\cell_base_info
+raw_data	E:\Users\scfan\data\CellCycle\release_version\raw_data
+sim_data	E:\Users\scfan\data\CellCycle\release_version\sim_data_replicates_number
+features	E:\Users\scfan\data\CellCycle\release_version\features
+combineNumber	20
+#fragment_interaction_number_designating_mode	all_cell/each_cell
+fragment_interaction_number_designating_mode	all_cell
+all_cell_seqDepthTime	1
+#each_cell_fragment_interaction_number_designating_mode	sequence_depth_time or fragment_interaction_number or None
+each_cell_fragment_interaction_number_designating_mode	sequence_depth_time
+#repllicates_number_designating_mode	all_cell/each_cell
+repllicates_number_designating_mode	each_cell
+all_cell_replicates_number	1
