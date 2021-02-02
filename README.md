@@ -62,7 +62,7 @@ Flow chart showing the designation of replicates' number.
     16. kernel_number: The number of GPU kernel used in simulating. When parallel is assigned as True, kernel_number will work. The default value is 24.
 ### 3. Pre-preocess
 #### 3.1 Input-file format
-A tab('\t') separated file, named _chr_pos_, that contains, one each line
+A tab('\t') separated file, named _chr_pos_, that contains, on each line
 
 `<chr1> <pos1> <chr2> <pos2> <count> <cell_name>`
 
@@ -76,7 +76,7 @@ Convert the _adj_ (fends-fends interaction) file to _chr_pos_ file by running th
 
     python convet_adj_to_chr_pos.py -p parameters.txt -f GATC.fends
 
-GATC.fends is the projection file conveting fragment end(fend) to chromosome(chr) and coordinates(coord), placed in _cell_base_info_ directory. scHiC2 provides scripts and guidelines to generate _adj_ file([https://github.com/tanaylab/schic2](https://github.com/tanaylab/schic2)). The website also supplies Hi-C contact maps with processed _adj_ files.
+GATC.fends is the projection file conveting fragment end(fend) to chromosome(chr) and coordinates(coord), placed in _cell_base_info_ directory (Due to the file size limitation of github, the file has been compressed into rar format, you need to decompress it before use). scHiC2 provides scripts and guidelines to generate _adj_ file([https://github.com/tanaylab/schic2](https://github.com/tanaylab/schic2)). The website also supplies Hi-C contact maps with processed _adj_ files.
 
 
 #### 3.3 Extracting features
@@ -118,5 +118,5 @@ The simulated cells, named _chr_pos_, are placed in _sim_data_ folder.
 
     python convert_chr_pos_to_bin.py -p parameters.txt -i combine_data\chr_pos -o combine_data\bin_pairs  -r resolution
 ### 6. Creating simulation with your own data
-1. Follow section 1 "Preparation" to download FreeHi-C repository and install essential software.
-2. Download or prepare your own Hi-C sequencing data (chr_pos files).
+1. Follow section 1 "Preparation" to download scHi-CSim repository and install essential software.
+2. Download or prepare your own single-cell Hi-C sequencing data (chr_pos files).
