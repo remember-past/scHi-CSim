@@ -87,7 +87,7 @@ Flow chart showing the designation of replicates' number.
     14. Bin_interval_number: Number of intervals when stratified sampling. The default value is 200.
     15. parallel: Two-value parameter(True or False) to determine whether to simulate in parallel. The default value is True.
     16. kernel_number: The number of GPU kernel used in simulating. When parallel is assigned as True, kernel_number will work. The default value is 24.
-### 3. Pre-preocess
+### 3. Pre-processing
 #### 3.1 Input-file format
 A tab('\t') separated file, named _chr_pos_, that contains, on each line
 
@@ -134,7 +134,7 @@ Simulate cells according to _cell_name_list.txt_, as following
     python simulating.py -p parameters.txt
 
 The simulated cells, named _chr_pos_, are placed in _sim_data_ folder.
-### 5. Post-process
+### 5. Post-processing
 #### 5.1 Merging the simulated cells
 
     python merge_cell.py -p parameters.txt -m data\merge_data\merge_cell_name_list.txt -i data\sim_data -o data\merge_data
