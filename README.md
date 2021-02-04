@@ -99,7 +99,7 @@ A tab('\t') separated file, named _chr_pos_, that contains, on each line
 * cell_name= cell name corresponding to current file
 
 #### 3.2 File conversion(optional)
-Convert the _adj_ (fends-fends interaction) file to _chr_pos_ file by running the following scripts:
+Convert the _adj_ (fends-fends interaction) file to the _chr_pos_ file by running the following script:
 
     python convet_adj_to_chr_pos.py -p parameters.txt -f GATC.fends
 
@@ -107,7 +107,7 @@ GATC.fends is the projection file conveting fragment end(fend) to chromosome(chr
 
 
 #### 3.3 Extracting features
-Construct features sets, PCC and CDD, by running the following scripts:
+Construct features sets, PCC and CDD, by running the following script:
 
     python extract_features.py -p parameters.txt -b 10
 
