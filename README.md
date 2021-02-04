@@ -94,7 +94,7 @@ A tab('\t') separated file, named _chr_pos_, that contains, on each line
 `<chr1> <pos1> <chr2> <pos2> <count> <cell_name>`
 
 * chr = chromosome (must be a chromosome in the genome)
-* pos = position
+* pos = position, the specific position of corresponding restriction fragment
 * count =restriction fragment-interaction number
 * cell_name= cell name corresponding to current file
 
@@ -127,7 +127,7 @@ Calculate the cell-cell distances by using PCC and CDD, as following
 
     python calculate_cell_cell_distance.py -p parameters.txt -c 2
 
-The script will use PCA(principal component analysis) to reduce the dimension of features' sets, PCC and CDD. The `-c` flag indicates the number of principal components used in calculating cell-cell distances. Then the cell-cell distances file, _cell_cell_distance.txt_, is generated and placed in _features_ directory. The user can also provide user-defined cell-to-cell distance, put it in the _features_ folder and name it _cell_cell_distance.txt_. For circular cell trajectories, it is recommended to use CIRCLET([https://github.com/zhanglabtools/CIRCLET](https://github.com/zhanglabtools/CIRCLET)) to construct the distance relationship between cells.
+The script will use PCA(principal component analysis) to reduce the dimension of features' sets, PCC and CDD. The `-c` flag indicates the number of principal components used in calculating cell-cell distances. Then the cell-cell distances file, _cell_cell_distance.txt_, is generated and placed in _features_ directory. The user can also provide user-defined cell-to-cell distances, put it in the _features_ folder and name it _cell_cell_distance.txt_. For circular cell trajectories, it is recommended to use CIRCLET([https://github.com/zhanglabtools/CIRCLET](https://github.com/zhanglabtools/CIRCLET)) to construct the distance relationship between cells.
 ### 4. Simulating
 Simulate cells according to _cell_name_list.txt_, as following
 
@@ -145,5 +145,8 @@ The simulated cells, named _chr_pos_, are placed in _sim_data_ folder.
 
     python convert_chr_pos_to_bin.py -p parameters.txt -i combine_data\chr_pos -o combine_data\bin_pairs  -r resolution
 ### 6. Creating simulation with your own data
-1. Follow section 1 "Preparation" to download scHi-CSim repository and install essential software.
-2. Download or prepare your own single-cell Hi-C sequencing data (chr_pos files).
+1. Follow section 1 "Preparation" to download scHi-CSim repository and install essential modules.
+2. Download or prepare your own single-cell Hi-C sequencing data (chr_pos format). Put the single-cell Hi-C data in _raw_data_ folder determined in "parameter.txt" file. Each cell should be placed in a separate folder under _raw_data_. Then, as in the example, put the basic information of the data under the _cell_base_info_ folder, which contains _cell_name_list.txt_, _chr_length_, _fragment_num_. If you choose to independently specify the simulation information of each cell in "parameter.txt" file, you also need to provide an additional corresponding files, such as _each_cell_fragment_interaction_number.txt_, _each_cell_replicates_number.txt_ and _each_cell_replicates_number.txt_. All the above files are tab-separated.
+3. Generate the _cell_cell_distance.txt_ file according to our pre-process guidelines and put it under the _features_ folder.
+4. Designate folder's name of _sim_data_ in "parameter.txt" file for this run. After running _simulating.py_ scripts, the simualted cell will be placed in _sim_data_ folder. Note that the name of _sim_data_ should be different in order to avode the overlaps of results.
+5. Create the _merger_cell_name_list.txt_ upder _merge_data_ folder. Then run _merge_cell.py_ scripts to generate merged Hi-C files for downstream analysis. We also supply a script, convert_chr_pos_to_bin.py, to convert the chr_pos file to bin_pars file.
