@@ -22,8 +22,20 @@ After git clone the repository completely, Hi-CSim is installed successfully. Th
 -   joblib(>=0.13.2)
 
 The environment can also be quickly installed through python-requirements.txt file by running
+```
+    pip install -r python-requirements.txt
+```
+or by running
 
-		pip install -r python-requirements.txt
+1. Install [conda](https://docs.conda.io/projects/conda/en/latest/user-guide/install/index.html).
+2. Install enviroment
+```
+      conda env create -f requirements.yml
+```
+3. Activate enviroment
+```
+      conda activate Sim-HiC
+```
 
 After installing the necessary environment, the instance consisting of 20 cells placed in data folder is easy to run by the following guidelines.
 
