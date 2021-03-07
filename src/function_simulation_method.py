@@ -423,7 +423,7 @@ def collect_generate_and_store_interval_bin_for_raw(sim_info,raw_data_dir,cell_n
     # not parallel
     if(not parallel):
         for one_bin in cis_cell_dis_df.columns.values:
-            print(one_bin)
+            # print(one_bin)
             task_column_name = one_bin
             task_df = pd.DataFrame(cis_cell_dis_df[one_bin])
             one_bin_contacts_ratio_bin_df = get_bin_interval_df(task_df, Bin_interval_number, task_column_name)
@@ -643,7 +643,7 @@ def generate_sim_statistic_info_not_designating_each_cell_fragment_number(sim_in
     # not parallel
     if(not parallel):
         for one_dis_loci_name, one_dis_loci_bin_df in cis_cell_dis_bin_df_dic.items():
-            print(one_dis_loci_name)
+            # print(one_dis_loci_name)
             column_name = one_dis_loci_name
             sim_contacts_total_CisDis_Trans_ratio_df = interval_sample(one_dis_loci_bin_df,
                                                                              sim_contacts_total_CisDis_Trans_ratio_df,
@@ -1026,6 +1026,45 @@ def simulation_by_cell_name_list_by_cell_cell_distance(sim_info,raw_data_dir,sim
                                                      each_cell_prop, combine_number, max_bin,sim_contacts_total_CisDis_Trans_number_df_T,each_cell_replicates_number_dic[cell_name],cell_cell_distance_df)
             for cell_name in cell_name_list)
 
+
+def reduce_count_for_sim_statistic(sim_info,sim_contacts_total_CisDis_Trans_number_df_T, each_cell_seqDepth_time_dic, step,
+                                   filter_distance=1000000, filter_value_percential=20, verbose=False):
+    filter_bin = int(convert_distance_to_bin(filter_distance, step))
+
+    # cell_name_list = sim_contacts_total_CisDis_Trans_number_df_T.index.to_list()
+    cell_name_list =sim_info.cell_name_list
+    new_sim_contacts_total_CisDis_Trans_number_df_T = copy.deepcopy(sim_contacts_total_CisDis_Trans_number_df_T)
+    for i, cell_name in enumerate(cell_name_list):
+        if (verbose):
+            print(i, cell_name)
+        time = each_cell_seqDepth_time_dic[cell_name]
+        contacts_value_array = sim_contacts_total_CisDis_Trans_number_df_T.loc[cell_name].values
+
+        bin_value_array = contacts_value_array[3:]
+        X = np.ma.masked_equal(bin_value_array, 0)
+        new_bin_value_array = X.compressed()
+
+        threshold_value = np.percentile(new_bin_value_array, filter_value_percential)
+
+        for column_name in new_sim_contacts_total_CisDis_Trans_number_df_T.columns[2:]:
+            if (column_name > filter_bin and sim_contacts_total_CisDis_Trans_number_df_T.loc[
+                cell_name, column_name] <= threshold_value and sim_contacts_total_CisDis_Trans_number_df_T.loc[
+                cell_name, column_name] > 1 and time > 1):
+                raw_count = sim_contacts_total_CisDis_Trans_number_df_T.loc[cell_name, column_name]
+                new_sim_contacts_total_CisDis_Trans_number_df_T.loc[cell_name, column_name] = int(
+                    (raw_count / time) * (1 + time / 10))
+                if (verbose):
+                    print(raw_count, new_sim_contacts_total_CisDis_Trans_number_df_T.loc[cell_name, column_name])
+    return new_sim_contacts_total_CisDis_Trans_number_df_T
+def statistic_df_T_filter(sim_info,sim_data_dir,each_cell_seqDepth_time_dic,step,filter_distance,filter_value_percential):
+    sim_contacts_total_CisDis_Trans_number_df_T_pkl_path = os.path.join(sim_data_dir,
+                                                                        "sim_contacts_total_CisDis_Trans_number_df_T.pkl")
+    sim_contacts_total_CisDis_Trans_number_df_T=sim_info.load_variable_from_pikle_file(sim_contacts_total_CisDis_Trans_number_df_T_pkl_path)
+    new_sim_contacts_total_CisDis_Trans_number_df_T = reduce_count_for_sim_statistic(
+        sim_info,sim_contacts_total_CisDis_Trans_number_df_T, each_cell_seqDepth_time_dic, step,
+        filter_distance=filter_distance, filter_value_percential=filter_value_percential, verbose=False)
+    sim_info.store_variable_from_pikle_file(sim_contacts_total_CisDis_Trans_number_df_T_pkl_path,
+                                            new_sim_contacts_total_CisDis_Trans_number_df_T)
 class one_run_simulation(object):
     @staticmethod
     def one_run_simulation(sim_info,raw_data_dir,sim_data_dir,cell_name_list,parallel,kernel_number,Bin_interval_number,simSeqTime,combine_number,step,generate_raw_info=True):
@@ -1042,23 +1081,30 @@ class one_run_simulation(object):
     @staticmethod
     def one_run_simulation_designating_each_cell_fragment_number(sim_info,raw_data_dir,sim_data_dir,cell_name_list,parallel,kernel_number,Bin_interval_number,each_cell_fragment_number_dic,each_cell_replicates_number_dic,combine_number,step,cell_cell_distance_df,generate_raw_info=True):
         if(generate_raw_info):
+            print("Start to process raw data...")
             run_generate_statisc_info(sim_info, raw_data_dir, cell_name_list, parallel, kernel_number,step)
             collect_generate_and_store_interval_bin_for_raw(sim_info, raw_data_dir, cell_name_list, kernel_number, parallel,step,
                                                             Bin_interval_number=Bin_interval_number)
         # sim_data_dir=os.path.join(sim_data_dir,"SeqDepthTime_"+str(simSeqTime))
+        print("Start to generate sim data...")
         sim_info.recursive_mkdir(sim_data_dir)
         generate_sim_statistic_info_designating_each_cell_fragment_number(sim_info, raw_data_dir, sim_data_dir, parallel, kernel_number, each_cell_fragment_number_dic,step)
         simulation_by_cell_name_list_by_cell_cell_distance(sim_info, raw_data_dir, sim_data_dir, cell_name_list, combine_number, parallel,
                                      kernel_number,each_cell_replicates_number_dic,step,cell_cell_distance_df)
     @staticmethod
-    def one_run_simulation_not_designating_each_cell_fragment_number(sim_info,raw_data_dir,sim_data_dir,cell_name_list,parallel,kernel_number,Bin_interval_number,each_cell_seqDepth_time_dic,each_cell_replicates_number_dic,combine_number,step,cell_cell_distance_df,generate_raw_info=True):
+    def one_run_simulation_not_designating_each_cell_fragment_number(sim_info,raw_data_dir,sim_data_dir,cell_name_list,parallel,kernel_number,Bin_interval_number,each_cell_seqDepth_time_dic,each_cell_replicates_number_dic,combine_number,step,cell_cell_distance_df,filter_distance,
+                              filter_value_percential,generate_raw_info=True):
         if(generate_raw_info):
+            print("Start to process raw data...")
             run_generate_statisc_info(sim_info, raw_data_dir, cell_name_list, parallel, kernel_number,step)
             collect_generate_and_store_interval_bin_for_raw(sim_info, raw_data_dir, cell_name_list, kernel_number, parallel,step,
                                                             Bin_interval_number=Bin_interval_number)
         # sim_data_dir=os.path.join(sim_data_dir,"SeqDepthTime_"+str(simSeqTime))
+        print("Start to generate sim data...")
         sim_info.recursive_mkdir(sim_data_dir)
         generate_sim_statistic_info_not_designating_each_cell_fragment_number(sim_info, raw_data_dir, sim_data_dir, parallel, kernel_number, each_cell_seqDepth_time_dic,step)
+        statistic_df_T_filter(sim_info, sim_data_dir, each_cell_seqDepth_time_dic, step, filter_distance,
+                              filter_value_percential)
         simulation_by_cell_name_list_by_cell_cell_distance(sim_info, raw_data_dir, sim_data_dir, cell_name_list, combine_number, parallel,
                                      kernel_number,each_cell_replicates_number_dic,step,cell_cell_distance_df)
 

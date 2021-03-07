@@ -128,11 +128,12 @@ if __name__ == '__main__':
         read_in_value_dic[parameter_name] = value
     work_dir = read_in_value_dic['work_dir']
     scr_dir=read_in_value_dic['src']
-    parameters_dir = os.path.join(work_dir, "parameters.txt")
+    # parameters_dir = os.path.join(work_dir, "parameters.txt")
     cell_base_info_dir = read_in_value_dic['cell_base_info']
     raw_data_dir = read_in_value_dic['raw_data']
     sim_data_dir = read_in_value_dic['sim_data']
     features_dir = read_in_value_dic['features']
+
     python_dir = read_in_value_dic['python']
     combineNumber = int(read_in_value_dic['combineNumber'])
     combine_number=combineNumber
@@ -175,6 +176,7 @@ if __name__ == '__main__':
 
     print("Start to extract cell features...")
     start = datetime.datetime.now()
+    sim_info.recursive_mkdir(features_dir)
     cdd_file_path=os.path.join(scr_dir,'run_get_cdd.py')
     cdd_script=' '.join([python_dir,cdd_file_path,'-p',parmeter_df_dir])
     os.system(cdd_script)
@@ -191,12 +193,14 @@ if __name__ == '__main__':
     test_data_df_dic = raw_acp_df_dic
     all_pcc_file = os.path.join(features_dir, 'pcc_file.txt')
     pcc_intermediate_file_dir = os.path.join(features_dir, "pcc_intermediate_file")
-    sim_info.recursive_mkdir(pcc_intermediate_file_dir)
+    # sim_info.recursive_mkdir(pcc_intermediate_file_dir)
     threshold = 99.5
     one_or_sum = 'sum'
     max_value=args.b
-
-
+    import shutil
+    if(os.path.exists(pcc_intermediate_file_dir)):
+        shutil.rmtree(pcc_intermediate_file_dir)
+    sim_info.recursive_mkdir(pcc_intermediate_file_dir)
     if(parallel):
         features.get_PCC_vector_de_novo_MultiProcess_create_intermediate_file_sepcific_threshold_norm(sim_info,
                                                                                                       test_data_df_dic,
@@ -219,7 +223,8 @@ if __name__ == '__main__':
                                                                                                   pcc_intermediate_file_dir,
                                                                                                   threshold, one_or_sum,max_value=max_value)
     import shutil
-    shutil.rmtree(pcc_intermediate_file_dir)
+    if(os.path.exists(pcc_intermediate_file_dir)):
+        shutil.rmtree(pcc_intermediate_file_dir)
     end=datetime.datetime.now()
     print("Finish extracing PCC, using",end-start_pcc)
     end = datetime.datetime.now()

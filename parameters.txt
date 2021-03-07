@@ -1,9 +1,10 @@
-python	E:\Users\scfan\software\anaconda3_new\python.exe
-work_dir	E:\Users\scfan\program\simulation_project\release_version_2021_02_02
-cell_base_info	E:\Users\scfan\program\simulation_project\release_version_2021_02_02\data\cell_base_info
-raw_data	E:\Users\scfan\program\simulation_project\release_version_2021_02_02\data\raw_data
-sim_data	E:\Users\scfan\program\simulation_project\release_version_2021_02_02\data\sim_data
-features	E:\Users\scfan\program\simulation_project\release_version_2021_02_02\data\features
+python	PAHT_TO_python\python.exe
+work_dir	PATH_TO_SimHiC_Folder
+src	PATH_TO_SimHiC_Folder\src
+cell_base_info	PATH_TO_SimHiC_Folder\data\cell_base_info
+raw_data	PATH_TO_SimHiC_Folder\data\raw_data
+sim_data	PATH_TO_SimHiC_Folder\data\sim_data
+features	PATH_TO_SimHiC_Folder\data\features
 
 #fragment_interaction_number_designating_mode	all_cell/each_cell
 fragment_interaction_number_designating_mode	all_cell
@@ -18,4 +19,6 @@ combineNumber	5
 #step	0.04
 #Bin_interval_number	200
 parallel	False
-#kernel_number	24
+kernel_number	24
+filter_distance	1000000
+filter_value_percential	20

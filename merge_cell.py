@@ -209,11 +209,17 @@ if __name__ == '__main__':
         for cell_name in sim_info.cell_name_list:
             # print(i, cell_name)
             i = i + 1
-            chr_pos_file=os.path.join(args.i,cell_name,'replicates_1','chr_pos')
-            one_df = read_chr_pos(chr_pos_file)
-            raw_name_list.append(cell_name)
-            raw_acp_df_list.append(one_df)
-
+            target_dir = os.path.join(args.i,cell_name)
+            name = "replicates"
+            for one in os.listdir(target_dir):
+                if (name in one):
+                    if(os.path.isdir(os.path.join(target_dir,one))):
+                        chr_pos_file=os.path.join(target_dir, one, 'chr_pos')
+                        print(chr_pos_file)
+                        one_df = read_chr_pos(chr_pos_file)
+                        raw_name_list.append(cell_name)
+                        raw_acp_df_list.append(one_df)
+            # chr_pos_file=os.path.join(args.i,cell_name,'replicates_1','chr_pos')
         raw_acp_df = pd.concat(raw_acp_df_list, axis=0, sort=False)
         # raw_acp_df.reset_index(inplace=True)   # raw_acp_df already has column 'cell_name'
         raw_acp_df.reset_index(inplace=True, drop=True)
