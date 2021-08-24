@@ -1,18 +1,18 @@
-# Hi-CSim: a flexible simulator that generates high-fidelity single-cell Hi-C data for benchmarking
+# scHi-CSim: a flexible simulator that generates high-fidelity single-cell Hi-C data for benchmarking
 
-## Overview of Hi-CSim
-Hi-CSim is a single-cell Hi-C simulator for generating high-fidelity data. As for the sparseness and heterogeneity of single-cell data, Hi-CSim merges neighboring cells to overcome the sparseness, samples interactions in distance-stratified chromosomes to maintain the heterogeneity of the single cells and estimates the empirical distribution of restriction fragments to generate simulated data. We verify that Hi-CSim generates high-fidelity data by comparing the performance of single-cell clustering and detection of chromosomal high-order structures with raw data. Furthermore, Hi-CSim is flexible to change the sequencing depth and the number of simulated replicates. Hi-CSim requires real single-cell Hi-C sequencing data (fragment-interaction format) as input along with user-defined simulation parameters.
+## Overview of scHi-CSim
+scHi-CSim is a single-cell Hi-C simulator for generating high-fidelity data. As for the sparseness and heterogeneity of single-cell data, scHi-CSim merges neighboring cells to overcome the sparseness, samples interactions in distance-stratified chromosomes to maintain the heterogeneity of the single cells and estimates the empirical distribution of restriction fragments to generate simulated data. We verify that scHi-CSim generates high-fidelity data by comparing the performance of single-cell clustering and detection of chromosomal high-order structures with raw data. Furthermore, scHi-CSim is flexible to change the sequencing depth and the number of simulated replicates. scHi-CSim requires real single-cell Hi-C sequencing data (fragment-interaction format) as input along with user-defined simulation parameters.
 
-**Hi-CSim workflow：**
+**scHi-CSim workflow：**
 
-![Hi-CSim pipeline diagram](/fig/01_workflow.png)
+![scHi-CSim pipeline diagram](/fig/01_workflow.png)
 
-## Hi-CSim Usage
+## scHi-CSim Usage
 ### 1. Preparation
 
-    git clone https://github.com/zhanglabtools/Hi-CSim/
+    git clone https://github.com/zhanglabtools/scHi-CSim
 
-After git clone the repository completely, Hi-CSim is installed successfully. The repository includes an example in the data folder, consisting of  20 mouse embryonic stem cells(The cells are available at [https://github.com/tanaylab/schic2](https://github.com/tanaylab/schic2)). The default setting of Hi-CSim is ready to run the example once the environmental requirements meet. The requirements of Hi-CSim are as follows,
+After git clone the repository completely, scHi-CSim is installed successfully. The repository includes an example in the data folder, consisting of  20 mouse embryonic stem cells(The cells are available at [https://github.com/tanaylab/schic2](https://github.com/tanaylab/schic2)). The default setting of scHi-CSim is ready to run the example once the environmental requirements meet. The requirements of scHi-CSim are as follows,
 -   python(>= 3.7.4)
 -   pandas(>= 0.25.1)
 -   numpy(>= 1.16.5)
@@ -34,7 +34,7 @@ or by running
 ```
 3. Activate enviroment
 ```
-      conda activate Sim-HiC
+      conda activate scHi-CSim
 ```
 
 After installing the necessary environment, the instance consisting of 20 cells placed in data folder is easy to run by the following guidelines.
@@ -45,8 +45,8 @@ After installing the necessary environment, the instance consisting of 20 cells 
 #### 2.1 Parameters set for general folders
 
     1. python        : Path to the python interpreter(E.g., C:\Program Files\anaconda3\python.exe is a popular alternative path).
-    1. work_dir      : Path to the Hi-CSim repository.
-    2. src           : Path to the Hi-CSim src folder(E.g., work_dir\src).
+    1. work_dir      : Path to the scHi-CSim repository.
+    2. src           : Path to the scHi-CSim src folder(E.g., work_dir\src).
     3. cell_base_info: Path to the folder contaning basic infomation of all cells, such as cell name, chromosome length and so on(E.g., work_dir\data\cell_base_info).
     4. raw_data      : Path to the folder contaning raw data of all cells(E.g., work_dir\data\raw_data).
     5. sim_data      : Path to the folder contaning simulated data of all cells(E.g., work_dir\data\sim_data).
@@ -118,7 +118,7 @@ Convert the _adj_ (fends-fends interaction) file to the _chr_pos_ file by runnin
 
     python convert_adj_to_chr_pos.py -p parameters.txt -f GATC.fends
 
-GATC.fends is the projection file conveting fragment end(fend) to chromosome(chr) and coordinates(coord), placed in _cell_base_info_ directory (Due to the file size limitation of github, the file has been compressed into rar format, you need to decompress it before use). scHiC2 provides scripts and guidelines to generate _adj_ file([https://github.com/tanaylab/schic2](https://github.com/tanaylab/schic2)). The website also supplies Hi-C contact maps with processed _adj_ files.
+GATC.fends is the projection file conveting fragment end(fend) to chromosome(chr) and coordinates(coord), placed in _cell_base_info_ directory (Due to the file size limitation of github, the file has been compressed into rar format, you need to decompress it before use). scHiC2 provides scripts and guidelines to generate _adj_ file ([https://github.com/tanaylab/schic2](https://github.com/tanaylab/schic2)). The website also supplies Hi-C contact maps with processed _adj_ files.
 
 
 #### 3.3 Extracting features
@@ -143,7 +143,7 @@ Calculate the cell-cell distances by using PCC and CDD, as following
 
     python calculate_cell_cell_distance.py -p parameters.txt -c 2
 
-The script will use PCA(principal component analysis) to reduce the dimension of features' sets, PCC and CDD. The `-c` flag indicates the number of principal components used in calculating cell-cell distances. Then the cell-cell distances file, _cell_cell_distance.txt_, is generated and placed in _features_ directory. The user can also provide user-defined cell-to-cell distances, put it in the _features_ folder and name it _cell_cell_distance.txt_. For circular cell trajectories, it is recommended to use CIRCLET([https://github.com/zhanglabtools/CIRCLET](https://github.com/zhanglabtools/CIRCLET)) to construct the distance relationship between cells.
+The script will use PCA(principal component analysis) to reduce the dimension of features' sets, PCC and CDD. The `-c` flag indicates the number of principal components used in calculating cell-cell distances. Then the cell-cell distances file, _cell_cell_distance.txt_, is generated and placed in _features_ directory. The user can also provide user-defined cell-to-cell distances, put it in the _features_ folder and name it _cell_cell_distance.txt_. For circular cell trajectories, it is recommended to use CIRCLET ([https://github.com/zhanglabtools/CIRCLET](https://github.com/zhanglabtools/CIRCLET)) to construct the distance relationship between cells.
 ### 4. Simulating
 Simulate cells according to _cell_name_list.txt_, as following
 
@@ -174,7 +174,7 @@ The simulated cells, named _chr_pos_, are placed in _sim_data_ folder.
 ![usage_of_time_and_memory](/fig/time_02.png)
 
 ### 6. Creating simulation with your own data
-1. Follow section 1 "Preparation" to download Hi-CSim repository and install essential modules.
+1. Follow section 1 "Preparation" to download scHi-CSim repository and install essential modules.
 2. Download or prepare your own single-cell Hi-C sequencing data (chr_pos format). Put the single-cell Hi-C data in _raw_data_ folder determined in "parameter.txt" file. Each cell should be placed in a separate folder under _raw_data_. Then, as in the example, put the basic information of the data under the _cell_base_info_ folder, which contains _cell_name_list.txt_, _chr_length_, _fragment_num_. If you choose to independently specify the simulation information of each cell in "parameter.txt" file, you also need to provide an additional corresponding files, such as _each_cell_fragment_interaction_number.txt_, _each_cell_replicates_number.txt_ and _each_cell_replicates_number.txt_. All the above files are tab-separated.
 3. Generate the _cell_cell_distance.txt_ file according to our pre-process guidelines and put it under the _features_ folder.
 4. Designate folder's name of _sim_data_ in "parameter.txt" file for this run. After running _simulating.py_ script, the simualted cell will be placed in _sim_data_ folder. Note that the name of _sim_data_ should be different in order to avode the overlaps of results.

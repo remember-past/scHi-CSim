@@ -1,10 +1,10 @@
 python	PAHT_TO_python\python.exe
-work_dir	PATH_TO_SimHiC_Folder
-src	PATH_TO_SimHiC_Folder\src
-cell_base_info	PATH_TO_SimHiC_Folder\data\cell_base_info
-raw_data	PATH_TO_SimHiC_Folder\data\raw_data
-sim_data	PATH_TO_SimHiC_Folder\data\sim_data
-features	PATH_TO_SimHiC_Folder\data\features
+work_dir	PATH_TO_scHiCSim_Folder
+src	PATH_TO_scHiCSim_Folder\src
+cell_base_info	PATH_TO_scHiCSim_Folder\data\cell_base_info
+raw_data	PATH_TO_scHiCSim_Folder\data\raw_data
+sim_data	PATH_TO_scHiCSim_Folder\data\sim_data
+features	PATH_TO_scHiCSim_Folder\data\features
 
 #fragment_interaction_number_designating_mode	all_cell/each_cell
 fragment_interaction_number_designating_mode	all_cell
