@@ -146,7 +146,11 @@ if __name__ == '__main__':
     Bin_interval_number=int(read_in_value_dic['Bin_interval_number'])
     parallel=True if read_in_value_dic['parallel']=='True' else False
     kernel_number = int(read_in_value_dic['kernel_number'])
-    filter_distance=int(read_in_value_dic['filter_distance']) ##
+
+    ##scHi-CSim is independently sampling fragment interactions in each chromosomal distance, and the count of Hi-C data at a longer distance is relatively small.
+    # If the replicate number of simulated data set above is greater than 1, then it is necessary to reduce the probability of interactions that are far from the diagonal and have lower values.
+    # In this way, the number of interactions in the simulation data can be reduced to avoid the formation of very obvious noise points at a far distance.
+    filter_distance=int(read_in_value_dic['filter_distance'])
     filter_value_percentile=float(read_in_value_dic['filter_value_percentile'])
 
     sys.path.append(work_dir)
