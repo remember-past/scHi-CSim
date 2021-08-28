@@ -101,14 +101,13 @@ Flow chart showing the designation of replicates' number.
     15. parallel: Two-value parameter(True or False) to determine whether to simulate in parallel. The default value is True.
     16. kernel_number: The number of GPU kernel used in simulating. When parallel is assigned as True, kernel_number will work. The default value is 24.
     17. filter_distance： The threshold of chromosomal distance used for filtering noisy
-     signals. The part greater than the threshold will be denoised. filter_distance will work
-      when the replicate number of simulated data set above is greater than 1. The default value
-       is 1000000.
+        signals. The part greater than the threshold will be denoised. filter_distance will work
+        when the replicate number of simulated data set above is greater than 1. The default value is 1000000.
     18. filter_value_percentile: The percentile of values used for filtering noisy signals.
-    The fragment interactions whose chromosomal distance is more than filter_distance and count
-     number is less than filter_value_percentile will be filtered by controlling the simulated
-      sequencing depth. filter_value_percentile will work when the replicate number of simulated
-       data set above is greater than 1. The default value is 20.
+        The fragment interactions whose chromosomal distance is more than filter_distance and
+        count number is less than filter_value_percentile will be filtered by controlling the
+        simulated sequencing depth. filter_value_percentile will work when the replicate number
+        of simulated data set above is greater than 1. The default value is 20.
 __Explanation__ of 17 and 18: scHi-CSim is independently sampling fragment interactions in each chromosomal distance, and the count of Hi-C data at a longer distance is relatively small. If the replicate number of simulated data set above is greater than 1, then it is necessary to reduce the probability of interactions that are far from the diagonal and have lower values. In this way, the number of interactions in the simulation data can be reduced to avoid the formation of very obvious noise points at a far distance.
 ### 3. Pre-processing
 #### 3.1 Input-file format
