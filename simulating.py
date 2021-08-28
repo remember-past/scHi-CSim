@@ -33,7 +33,7 @@ def get_default_value():
                            'each_cell_fragment_interaction_number_designating_mode',
                            'repllicates_number_designating_mode',
                            'all_cell_replicates_number', 'step', 'Bin_interval_number', 'parallel', 'kernel_number',
-                           'filter_distance','filter_value_percential']
+                           'filter_distance','filter_value_percentile']
     default_value_dic = {'python': 'E:\\Users\\scfan\\software\\anaconda3_new\\python.exe',
                          'work_dir': 'E:\\Users\\scfan\\program\\simulation_project\\release_version',
                          'src': 'E:\\Users\\scfan\\program\\simulation_project\\release_version\\src',
@@ -46,7 +46,7 @@ def get_default_value():
                          'each_cell_fragment_interaction_number_designating_mode': 'sequence_depth_time',
                          'repllicates_number_designating_mode': 'all_cell', 'all_cell_replicates_number': '1',
                          'step': str((math.log(10, 2)) / 80), 'Bin_interval_number': str(200), 'parallel': 'True',
-                         'kernel_number': str(24),'filter_distance':1000000,'filter_value_percential':20.0}
+                         'kernel_number': str(24),'filter_distance':1000000,'filter_value_percentile':20.0}
     return parameter_name_list,default_value_dic
 
 def read_in_parameters_df(parmeter_df_dir):
@@ -147,7 +147,7 @@ if __name__ == '__main__':
     parallel=True if read_in_value_dic['parallel']=='True' else False
     kernel_number = int(read_in_value_dic['kernel_number'])
     filter_distance=int(read_in_value_dic['filter_distance'])
-    filter_value_percential=float(read_in_value_dic['filter_value_percential'])
+    filter_value_percentile=float(read_in_value_dic['filter_value_percentile'])
 
     sys.path.append(work_dir)
 
@@ -228,6 +228,6 @@ if __name__ == '__main__':
         simulation_method.one_run_simulation.one_run_simulation_not_designating_each_cell_fragment_number(
             sim_info,raw_data_dir,sim_data_dir,cell_name_list,parallel,kernel_number,
             Bin_interval_number,each_cell_seqDepth_time_dic,each_cell_replicates_number_dic,
-            combine_number,step,cell_cell_distance_df,filter_distance,filter_value_percential,generate_raw_info=generate_raw_info)
+            combine_number,step,cell_cell_distance_df,filter_distance,filter_value_percentile,generate_raw_info=generate_raw_info)
     end=datetime.datetime.now()
     print("Finished, all cells using",end-start)
