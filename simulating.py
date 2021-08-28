@@ -146,7 +146,7 @@ if __name__ == '__main__':
     Bin_interval_number=int(read_in_value_dic['Bin_interval_number'])
     parallel=True if read_in_value_dic['parallel']=='True' else False
     kernel_number = int(read_in_value_dic['kernel_number'])
-    filter_distance=int(read_in_value_dic['filter_distance'])
+    filter_distance=int(read_in_value_dic['filter_distance']) ##
     filter_value_percentile=float(read_in_value_dic['filter_value_percentile'])
 
     sys.path.append(work_dir)
