@@ -169,16 +169,11 @@ The simulated cells, named _chr_pos_, are placed in _sim_data_ folder.
     python convert_chr_pos_to_bin.py -p parameters.txt -i combine_data\chr_pos -o combine_data\bin_pairs  -r resolution
 
 ### Run time and Complexity
-* The consumption of simulating the instance consisting of 20 cells is expected to less than 10 minutes with 1 cores CPU in a normal PC or server. The usage of time and memory for reference with a distinct number of cores are exhibited as follows. If _n_ represents the total number of fragment interactions, the simulation can be performed with _O(n)_.
+* The consumption of simulating the instance consisting of 20 cells is expected to less than 10 minutes with 1 cores CPU in a normal PC or server. The usage of time and memory for reference with a distinct number of cores are exhibited as follows. The complexity of __Step 1__ is _O(n<sub>1</sub>)_, where _n<sub>1</sub>_ represents the total number of fragment interactions in raw data.  The complexity of __Step 2__ and __Step 3__ are _O(n<sub>2</sub>)_, where _n<sub>2</sub>_ represents the total number of fragment interactions in simulated data. Besides, __Step 2__ and __Step 3__ are performed independently for each cell. Therefore they are highly scalable for parallel computation. In summary, the complexity of scHi-CSim is _O(n)_, where _n_=max(_n<sub>1</sub>_,_n<sub>2</sub>_) and the usage of a multi-kernel CPU will significantly accelerate the simulation process. When the numbers of cores are 1, 4, 8, 12, 24, the peak memory usages of these experiments are 736Mb, 3,674Mb, 10,678Mb, 13,669Mb, and 21,849Mb, respectively.
 
 
-![usage_of_time_and_memory](/fig/time_00.png)
+![usage_of_time_and_memory](/fig/time.jpg)
 
-
-![usage_of_time_and_memory](/fig/time_01.png)
-
-
-![usage_of_time_and_memory](/fig/time_02.png)
 
 ### 6. Creating simulation with your own data
 1. Follow section 1 "Preparation" to download scHi-CSim repository and install essential modules.
