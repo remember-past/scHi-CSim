@@ -222,7 +222,7 @@ if __name__ == '__main__':
 
     cell_cell_distance_df = features.read_in_cell_cell_distance_df(features_dir)
     cell_name_list=sim_info.cell_name_list
-    generate_raw_info=False
+    generate_raw_info=True
     if(designate_each_cell_fragment_number==True):
         simulation_method.one_run_simulation.one_run_simulation_designating_each_cell_fragment_number(
             sim_info,raw_data_dir,sim_data_dir,cell_name_list,parallel,kernel_number,
