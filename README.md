@@ -5,7 +5,7 @@ scHi-CSim is a single-cell Hi-C simulator for generating high-fidelity data. As 
 
 **scHi-CSim workflow：**
 
-![scHi-CSim pipeline diagram](/fig/01_workflow.png)
+![scHi-CSim pipeline diagram](/fig/01_workflow.JPG)
 
 ## scHi-CSim Usage
 ### 1. Preparation
